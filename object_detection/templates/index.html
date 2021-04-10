@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Bird Detector</title>
+        <link rel="stylesheet" href="{{ stylesheet }}" type="text/css">
+
+        <script>
+            function init() {
+                var inputFile = document.getElementById('inputFile1');
+                inputFile.addEventListener('change', mostrarImagen, false);
+            }
+            function mostrarImagen(event) {
+                var file = event.target.files[0];
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    var img = document.getElementById('uploaded');
+                    img.src = event.target.result;
+                    // img.maxWidth = 500;
+                    // img.maxHeight = 500;
+                }
+                reader.readAsDataURL(file);
+            }
+            window.addEventListener('load', init, false);
+            </script>
+    </head>
+
+    <body>
+        <div id="welcome-bar">
+            <div id="logo">
+                <a class="site-link" href="{{ index }}" title="Bird Detector">
+                    <img class="logo-image" src="{{ logo }}" alt="Bird Detector">
+                </a>
+            </div>
+            <div id="message">
+                <h3 class="message"> Welcome to your best online bird detector</h3>
+            </div>
+        </div>
+
+        <div class="navbar">
+            <a class="Index" href="{{ index }}">Home</a>
+            <div class="dropdown">
+                <button class="dropbtn">Models
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="{{ index }}">Bird detector</a>
+                </div>
+            </div>
+            <a href="#About">About</a>
+        </div>
+
+        <div class="gif">
+                <img class="gif-image" src="{{ logo }}" alt="Gif">
+        </div>
+
+        <div class="upload-container">
+            <div class="upload-header">
+                <h3 class="text-muted">Upload Image</h3>
+            </div>
+            <div>
+                <form action="upload" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div>
+                            <input type="file" name="file" id="inputFile1">
+                            <input type="submit" value="Upload">
+                        </div>
+                        <div id="uploaded-container">
+                            <img id="uploaded">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--
+        <div class="upload-container">
+            <div class="upload-header">
+                <h3 class="text-muted">Upload Image</h3>
+                <input type="file" name="file" id="inputFile1"><br/><br/>
+                <input type="submit" value="Upload">
+            </div>
+        </div>
+        -->
+    </body>
+</html>

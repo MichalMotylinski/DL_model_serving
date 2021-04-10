@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Results</title>
+        <link rel="stylesheet" href="{{ stylesheet }}">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    </head>
+
+    <script>
+        function onClick(element) {
+            var name = element.src;
+            document.getElementById("img01").src = name;
+            document.getElementById("modal01").style.display = "block";
+        }
+    </script>
+
+    <body>
+        <div class="welcome-bar">
+            <div class="welcome-bar-item left">
+                <a class="site-link" href="{{ index }}" title="Bird Detector">
+                    <img class="logo-image" src="{{ logo}}" alt="Bird Detector">
+                </a>
+            </div>
+            <div class="welcome-bar-item right">
+                <h3 class="message"> Welcome to your best online object detector</h3>
+            </div>
+        </div>
+
+        <div class="navbar">
+            <a class="Index" href="{{ index }}">Home</a>
+            <div class="dropdown">
+                <button class="dropbtn">Models
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="{{ index }}">Bird detector</a>
+                </div>
+            </div>
+            <a href="#About">About</a>
+        </div>
+
+        <div class="grid-container">
+            <div id="table-wrapper">
+                <div id="tab">
+                    <div class="header">
+                        <td colspan="2">Detection results for {{ filename }}</td>
+                    </div>
+                    <div id="table-scroll">
+                        <table border = 1>
+                            {% for key, value, x in result %}
+
+                            <tr>
+                               <th> {{ key }} </th>
+                               <td> {{ value }} </td>
+                            </tr>
+
+                            {% endfor %}
+                         </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="download">
+                <div id="info-table-wrapper">
+                    <div id="inf-table">
+                        <div class="header">
+                            <td colspan="2">Find more about detectable birds!</td>
+                        </div>
+                        <div id="info-table-scroll">
+                            <table border = 1>
+                                {% for key, value, x in result %}
+
+                                <tr>
+                                   <th> {{ key }} </th>
+                                   <td> {{ value }} </td>
+                                </tr>
+
+                                {% endfor %}
+                             </table>
+                        </div>
+                    </div>
+                    <div id="btn1">
+                    <p>Click to download image with detection boxes -->
+                        <a href="{{ detected }}" download>
+                            <button><i class="fa fa-download"></i> Download</button>
+                        </a>
+                    </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="img1" >
+                <img class="result-img" src="{{ original }}" alt="Bird Detector" onclick="onClick(this)">
+            </div>
+            <div class="img2">
+                <img class="result-img" src="{{ detected }}" alt="Bird Detector" onclick="onClick(this)">
+            </div>
+
+            <div id="modal01" class="w3-modal" onclick="this.style.display='none'">
+                <span class="w3-button w3-hover-red w3-xlarge w3-display-topright">&times;</span>
+                <div class="w3-modal-content w3-animate-zoom">
+                    <img id="img01">
+                </div>
+            </div>
+
+        </div>
+    </body>
+</html>
