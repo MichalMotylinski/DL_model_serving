@@ -38,7 +38,7 @@ label_map = label_map_util.load_labelmap(PATH_TO_LABELS)
 categories = label_map_util.convert_label_map_to_categories(label_map,
                                                             max_num_classes=NUM_CLASSES,
                                                             use_display_name=True)
-
+ERROR = False
 category_index = label_map_util.create_category_index(categories)
 
 app = Flask(__name__)
@@ -71,7 +71,7 @@ def load_input_tensor(input_image):
 def check_files(filename, folder):
     num = 0
     for f in os.listdir(os.path.join("static", folder)):
-        if filename.split(".")[0] in f and filename.split(".")[1] == f[-3:]:
+        if filename.split(".")[0] in f and filename.split(".")[1] == f.split(".")[1]:
             num = num + 1
     return num
 
@@ -84,7 +84,6 @@ def inference(frame, stub, model_name="od"):
 
     cv2_im = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     image = Image.fromarray(cv2_im)
-    print(image.size)
     # Resize images to fit the model
     old_width, old_height = image.size
     width = 0
@@ -148,7 +147,11 @@ def index():
     index = url_for("index")
     logo = url_for("static", filename=os.path.join(app.config["SITE_IMAGES_FOLDER"], "bird_logo.jpg"))
     #logo = url_for(app.config["SITE_IMAGES_FOLDER"], filename="bird_logo.jpg")
-    return render_template("index.html", stylesheet=stylesheet, index=index, logo=logo)
+    wall = []
+    for i in range(0, 5):
+        wall.append(url_for("static", filename=os.path.join(app.config["SITE_IMAGES_FOLDER"], f"wall{i}.jpg")))
+    return render_template("index.html", stylesheet=stylesheet, index=index,
+                           logo=logo, error=app.config["EXT_ERROR"], wall=wall)
 
 
 @app.route("/upload", methods=["POST"])
@@ -156,6 +159,7 @@ def upload():
     file = request.files["file"]
     num = 0
     if file and allowed_file(file.filename):
+        app.config["EXT_ERROR"] = False
         filename = secure_filename(file.filename)
         if os.path.exists(os.path.join("static", app.config["UPLOAD_FOLDER"], filename)):
             os.rename(os.path.join("static", app.config["UPLOAD_FOLDER"], filename),
@@ -164,6 +168,9 @@ def upload():
 
         file.save(os.path.join("static", app.config["UPLOAD_FOLDER"], filename))
         return redirect(url_for("results", filename=filename))
+    else:
+        app.config["EXT_ERROR"] = True
+        return redirect(url_for("index"))
 
 
 @app.route("/results/<filename>")
@@ -199,10 +206,15 @@ def results(filename):
     detected_path = os.path.join("static", app.config["DETECTION_FOLDER"], detected)
     index = url_for("index")
     logo = url_for("static", filename=os.path.join(app.config["SITE_IMAGES_FOLDER"], "bird_logo.jpg"))
-    print(detected_path)
+    birds = [["Erithacus rubecula - European robin", "https://en.wikipedia.org/wiki/European_robin"],
+             ["Periparus ater - Coal tit", "https://en.wikipedia.org/wiki/Coal_tit"],
+             ["Pica pica - Eurasian magpie", "https://en.wikipedia.org/wiki/Eurasian_magpie"],
+             ["Turdus merula - Common blackbird", "https://en.wikipedia.org/wiki/Common_blackbird"]]
 
-    return render_template("results.html", stylesheet=stylesheet, original=original_file, detected=detections_file,
-                           index=index, logo=logo, result=detections, filename=filename, d_path=detected_path)
+    return render_template("results.html", stylesheet=stylesheet, original=original_file,
+                           detected=detections_file, index=index, logo=logo,
+                           result=detections, filename=filename, d_path=detected_path,
+                           birds=birds)
 
 
 @app.after_request

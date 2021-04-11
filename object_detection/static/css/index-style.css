@@ -9,14 +9,13 @@ body {
 #welcome-bar {
     width: 100%;
     position: relative;
-
 }
 
 #logo {
     float: left;
     position: absolute;
     padding: 0;
-    margin-top: -20px;
+    margin-top: -10px;
 }
 
 #message {
@@ -30,7 +29,7 @@ body {
     padding: 0;
     margin: 0;
     border-radius: 50%;
-    width: 60px;
+    width: 55px;
 }
 
 /* Top navigation bar */
@@ -96,15 +95,27 @@ body {
 }
 
 /* Gif container */
-.gif {
-    height: 200px;
-    width: 100%;
+.wallie {
+  float: left;
+  width: 20%;
 
+  box-sizing: border-box;
 }
-.gif-image {
-    height: 100%;
+
+/* Clearfix (clear floats) */
+.wall::after {
+  content: "";
+  clear: both;
+  display: table;
+  box-sizing: border-box;
+}
+
+.wall-image {
+    height: 150px;
     width: 100%;
 }
+
+
 
 /* Upload image container */
 .upload-container {

@@ -15,14 +15,14 @@
     </script>
 
     <body>
-        <div class="welcome-bar">
-            <div class="welcome-bar-item left">
+        <div id="welcome-bar">
+            <div id="logo">
                 <a class="site-link" href="{{ index }}" title="Bird Detector">
-                    <img class="logo-image" src="{{ logo}}" alt="Bird Detector">
+                    <img class="logo-image" src="{{ logo }}" alt="Bird Detector">
                 </a>
             </div>
-            <div class="welcome-bar-item right">
-                <h3 class="message"> Welcome to your best online object detector</h3>
+            <div id="message">
+                <h3 class="message"> Welcome to your best online bird detector</h3>
             </div>
         </div>
 
@@ -43,7 +43,11 @@
             <div id="table-wrapper">
                 <div id="tab">
                     <div class="header">
-                        <td colspan="2">Detection results for {{ filename }}</td>
+                        <td colspan="2">Detection results for:</td>
+
+                    </div>
+                    <div class="header">
+                        <td colspan="2">{{ filename }}</td>
                     </div>
                     <div id="table-scroll">
                         <table border = 1>
@@ -64,27 +68,26 @@
                 <div id="info-table-wrapper">
                     <div id="inf-table">
                         <div class="header">
-                            <td colspan="2">Find more about detectable birds!</td>
+                            <td colspan="2">Find out more about our detectable birds!</td>
                         </div>
                         <div id="info-table-scroll">
                             <table border = 1>
-                                {% for key, value, x in result %}
+                                {% for name, link in birds %}
 
-                                <tr>
-                                   <th> {{ key }} </th>
-                                   <td> {{ value }} </td>
-                                </tr>
+                                    <tr>
+                                        <td> <a href="{{ link }}" target="_blank">{{ name }}</a> </td>
+                                    </tr>
 
                                 {% endfor %}
                              </table>
                         </div>
                     </div>
                     <div id="btn1">
-                    <p>Click to download image with detection boxes -->
-                        <a href="{{ detected }}" download>
-                            <button><i class="fa fa-download"></i> Download</button>
-                        </a>
-                    </p>
+                        <p>Click to download image with detection boxes -->
+                            <a href="{{ detected }}" download>
+                                <button><i class="fa fa-download"></i> Download</button>
+                            </a>
+                        </p>
                     </div>
                 </div>
 

@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Bird Detector</title>
         <link rel="stylesheet" href="{{ stylesheet }}" type="text/css">
-
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <script>
+            function error_check() {
+                var err = "{{ error }}";
+                if (err == "True") {
+                    alert("Only following extensions are allowed: jpg, jpeg, png");
+                }
+            }
             function init() {
                 var inputFile = document.getElementById('inputFile1');
                 inputFile.addEventListener('change', mostrarImagen, false);
@@ -22,10 +27,11 @@
                 reader.readAsDataURL(file);
             }
             window.addEventListener('load', init, false);
+
             </script>
     </head>
 
-    <body>
+    <body onload="error_check()">
         <div id="welcome-bar">
             <div id="logo">
                 <a class="site-link" href="{{ index }}" title="Bird Detector">
@@ -50,8 +56,22 @@
             <a href="#About">About</a>
         </div>
 
-        <div class="gif">
-                <img class="gif-image" src="{{ logo }}" alt="Gif">
+        <div class="wall">
+            <div class="wallie">
+                <img class="wall-image" src="{{ wall[0] }}" alt="Gif">
+            </div>
+            <div class="wallie">
+                <img class="wall-image" src="{{ wall[1] }}" alt="Gif">
+            </div>
+            <div class="wallie">
+                <img class="wall-image" src="{{ wall[2] }}" alt="Gif">
+            </div>
+            <div class="wallie">
+                <img class="wall-image" src="{{ wall[3] }}" alt="Gif">
+            </div>
+            <div class="wallie">
+                <img class="wall-image" src="{{ wall[4] }}" alt="Gif">
+            </div>
         </div>
 
         <div class="upload-container">
@@ -72,14 +92,5 @@
                 </form>
             </div>
         </div>
-        <!--
-        <div class="upload-container">
-            <div class="upload-header">
-                <h3 class="text-muted">Upload Image</h3>
-                <input type="file" name="file" id="inputFile1"><br/><br/>
-                <input type="submit" value="Upload">
-            </div>
-        </div>
-        -->
     </body>
 </html>

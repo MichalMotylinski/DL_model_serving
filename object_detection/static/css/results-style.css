@@ -5,37 +5,31 @@ body {
     margin: 0;
 }
 
-body {
-    background-color: lightblue;
-    padding: 0;
-    margin: 0;
-}
-
 /* Top welcome bar */
-.welcome-bar::after {
-    content: "";
-    display: table;
-    clear: both;
+#welcome-bar {
+    width: 100%;
+    position: relative;
 }
 
-.welcome-bar-item {
+#logo {
     float: left;
+    position: absolute;
+    padding: 0;
+    margin-top: -10px;
 }
 
-.welcome-bar-item.left {
-    width: 10%;
-}
-
-.welcome-bar-item.right {
-    width: 90%;
+#message {
+    position: relative;
+    width: 100%;
     text-align: center;
-    margin-left:-3%;
-    white-space: nowrap;
+    z-index: -10;
 }
 
 .logo-image {
+    padding: 0;
+    margin: 0;
     border-radius: 50%;
-    width: 60px;
+    width: 55px;
 }
 
 /* Top navigation bar */
@@ -99,11 +93,6 @@ body {
     display: block;
 }
 
-/* Gif container */
-.image {
-    height: 200px;
-    width: 100%;
-}
 
 .grid-container {
     display: grid;
@@ -124,35 +113,39 @@ body {
 
 #table-wrapper {
     position:relative;
-    width: 530px;
+    width: 500px;
     grid-area: table;
     justify-self: end;
+
 }
 
 #table-wrapper table {
     width:100%;
+
 }
 
 #tab {
     grid-area: table;
+
 }
 
 .header {
-    font-size: 24px;
+    font-size: 18px;
     overflow:hidden;
     text-overflow: ellipsis;
 }
 
 #table-scroll {
-    height:150px;
+    height:200px;
     overflow:auto;
-    margin-top:20px;
-    font-size: 16px;
+
+    font-size: 12px;
+    border-style: solid;
 }
 
 #info-table-wrapper {
     position:relative;
-    width: 530px;
+    width: 500px;
     grid-area: table;
     justify-self: end;
 }
@@ -169,18 +162,27 @@ body {
     height: 150px;
     overflow:auto;
     margin-top:20px;
-    font-size: 16px;
+    font-size: 12px;
+}
+
+tr:hover {
+   background: red;
+}
+
+td a {
+   display: block;
+   border: 1px solid black;
 }
 
 #download {
     grid-area: download;
     justify-self: start;
-    border-style: solid;
 }
 
 #btn1 {
-    position:relative;
-    top: 70%;
+    position:absolute;
+    top: 100%;
+    left: 1%;
 
 }
 
@@ -194,8 +196,8 @@ body {
 }
 
 .result-img {
-    height: 530px;
-    width: 530px;
+    height: 500px;
+    width: 500px;
 
     cursor:pointer;
 }

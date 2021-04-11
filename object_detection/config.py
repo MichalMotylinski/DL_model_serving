@@ -16,3 +16,4 @@ class ProductionConfig(Config):
     SITE_IMAGES_FOLDER = "site_images"
     CSS_FOLDER = "css"
     ALLOWED_EXTENSIONS = set(["jpg", "png", "jpeg"])
+    EXT_ERROR = False
