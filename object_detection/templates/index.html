@@ -21,76 +21,73 @@
                 reader.onload = function (event) {
                     var img = document.getElementById('uploaded');
                     img.src = event.target.result;
-                    // img.maxWidth = 500;
-                    // img.maxHeight = 500;
                 }
                 reader.readAsDataURL(file);
             }
             window.addEventListener('load', init, false);
-
-            </script>
+        </script>
     </head>
 
     <body onload="error_check()">
+        <!-- Top welcome bar -->
         <div id="welcome-bar">
             <div id="logo">
-                <a class="site-link" href="{{ index }}" title="Bird Detector">
-                    <img class="logo-image" src="{{ logo }}" alt="Bird Detector">
+                <a href="{{ index }}" title="Bird Detector">
+                    <img id="logo-image" src="{{ logo }}" alt="Bird Detector">
                 </a>
             </div>
             <div id="message">
-                <h3 class="message"> Welcome to your best online bird detector</h3>
+                <p> Welcome to your best online bird detector</p>
             </div>
         </div>
 
-        <div class="navbar">
-            <a class="Index" href="{{ index }}">Home</a>
-            <div class="dropdown">
-                <button class="dropbtn">Models
-                    <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content">
+        <!-- Top welcome bar -->
+        <div id="navbar">
+            <a href="{{ index }}">Home</a>
+            <div id="dropdown">
+                <button id="dropbtn">Models</button>
+                <div id="dropdown-content">
                     <a href="{{ index }}">Bird detector</a>
                 </div>
             </div>
             <a href="#About">About</a>
         </div>
 
-        <div class="wall">
+        <!-- Image container -->
+        <div id="wall">
             <div class="wallie">
-                <img class="wall-image" src="{{ wall[0] }}" alt="Gif">
+                <img class="wall-image" src="{{ wall[0] }}" alt="Image">
             </div>
             <div class="wallie">
-                <img class="wall-image" src="{{ wall[1] }}" alt="Gif">
+                <img class="wall-image" src="{{ wall[1] }}" alt="Image">
             </div>
             <div class="wallie">
-                <img class="wall-image" src="{{ wall[2] }}" alt="Gif">
+                <img class="wall-image" src="{{ wall[2] }}" alt="Image">
             </div>
             <div class="wallie">
-                <img class="wall-image" src="{{ wall[3] }}" alt="Gif">
+                <img class="wall-image" src="{{ wall[3] }}" alt="Image">
             </div>
             <div class="wallie">
-                <img class="wall-image" src="{{ wall[4] }}" alt="Gif">
+                <img class="wall-image" src="{{ wall[4] }}" alt="Image">
             </div>
         </div>
 
-        <div class="upload-container">
-            <div class="upload-header">
-                <h3 class="text-muted">Upload Image</h3>
+        <div id="upload-container">
+            <div id="upload-header">
+                <p>Upload Image</p>
             </div>
-            <div>
-                <form action="upload" method="post" enctype="multipart/form-data">
-                    <div class="row">
-                        <div>
-                            <input type="file" name="file" id="inputFile1">
-                            <input type="submit" value="Upload">
-                        </div>
-                        <div id="uploaded-container">
-                            <img id="uploaded">
-                        </div>
+            <form action="upload" method="post" enctype="multipart/form-data">
+                <div id="row">
+                    <div>
+                        <input type="file" name="file" id="inputFile1">
+                        <input type="submit" value="Upload">
                     </div>
-                </form>
-            </div>
+                    <div id="uploaded-container">
+                        <img id="uploaded">
+                    </div>
+                </div>
+            </form>
         </div>
+
     </body>
 </html>

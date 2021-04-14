@@ -5,16 +5,14 @@ import os
 import sys
 import tensorflow as tf
 from PIL import Image
-import time
 import cv2
 import grpc
-from grpc.beta import implementations
-import collections
 import math
 import operator
+import socket
+import struct
 
 from tensorflow_serving.apis import predict_pb2
-from tensorflow_serving.apis import prediction_service_pb2, get_model_metadata_pb2
 from tensorflow_serving.apis import prediction_service_pb2_grpc
 
 from utils import label_map_util
@@ -43,17 +41,32 @@ category_index = label_map_util.create_category_index(categories)
 
 app = Flask(__name__)
 # Set maximum age of a cashed file
-app.config.from_object('config.ProductionConfig')
+app.config.from_object('config.Config')
 
 
 def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1] in app.config["ALLOWED_EXTENSIONS"]
 
 
-def get_stub(host="127.0.0.1", port="8500"):
+def get_stub(host="172.23.0.1", port="8500"):
+    if app.config["DEVELOPMENT"]:
+        host = "127.0.0.1"
+    else:
+        host = get_default_gateway()
+    print(host)
     channel = grpc.insecure_channel(f"{host}:{port}")
     stub = prediction_service_pb2_grpc.PredictionServiceStub(channel)
     return stub
+
+
+def get_default_gateway():
+    with open("/proc/net/route") as fh:
+        for line in fh:
+            fields = line.strip().split()
+            if fields[1] != '00000000' or not int(fields[3], 16) & 2:
+                # If not default route or not RTF_GATEWAY, skip it
+                continue
+            return socket.inet_ntoa(struct.pack("<L", int(fields[2], 16)))
 
 
 def load_image_into_numpy_array(image):
@@ -77,22 +90,22 @@ def check_files(filename, folder):
 
 
 def inference(frame, stub, model_name="od"):
-    #stub = prediction_service_pb2_grpc.PredictionServiceStub(channel)
-    stub = get_stub()
     request = predict_pb2.PredictRequest()
-    request.model_spec.name = "od"
+    request.model_spec.name = model_name
 
     cv2_im = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     image = Image.fromarray(cv2_im)
+
     # Resize images to fit the model
-    old_width, old_height = image.size
+    """old_width, old_height = image.size
     width = 0
     height = 0
     if old_width != 768:
         width = 768
     if old_height != 1024:
         height = 1024
-    image = image.resize((width, height))
+    image = image.resize((width, height))"""
+
     input_tensor = load_input_tensor(image)
     request.inputs["input_tensor"].CopyFrom(input_tensor)
 
@@ -107,7 +120,6 @@ def inference(frame, stub, model_name="od"):
         result.outputs[dt_fields.detection_boxes].float_val, (-1, 4))
     output_dict['detection_scores'] = np.squeeze(
         result.outputs[dt_fields.detection_scores].float_val)
-
 
     threshold = .6
     detections = []
@@ -138,7 +150,7 @@ def inference(frame, stub, model_name="od"):
         min_score_thresh=threshold,
         agnostic_mode=False,
         skip_labels=True)
-    return frame, detections, (old_width, old_height)
+    return frame, detections
 
 
 @app.route("/")
@@ -146,7 +158,6 @@ def index():
     stylesheet = url_for("static", filename=os.path.join(app.config["CSS_FOLDER"], "index-style.css"))
     index = url_for("index")
     logo = url_for("static", filename=os.path.join(app.config["SITE_IMAGES_FOLDER"], "bird_logo.jpg"))
-    #logo = url_for(app.config["SITE_IMAGES_FOLDER"], filename="bird_logo.jpg")
     wall = []
     for i in range(0, 5):
         wall.append(url_for("static", filename=os.path.join(app.config["SITE_IMAGES_FOLDER"], f"wall{i}.jpg")))
@@ -157,7 +168,6 @@ def index():
 @app.route("/upload", methods=["POST"])
 def upload():
     file = request.files["file"]
-    num = 0
     if file and allowed_file(file.filename):
         app.config["EXT_ERROR"] = False
         filename = secure_filename(file.filename)
@@ -191,10 +201,10 @@ def results(filename):
     new_filename = ""
     for image_path in test_image_paths:
         image_np = np.array(Image.open(image_path))
-        image_np_inf, detections, size = inference(image_np, stub)
+        image_np_inf, detections = inference(image_np, stub)
         im_rgb = image_np_inf[:, :, [2, 1, 0]]
         im = Image.fromarray(im_rgb)
-        im = im.resize(size)
+        #im = im.resize(size)
         new_filename = filename.rsplit(".", 1)[0] + "_detect." + filename.rsplit(".", 1)[1]
         # im.save(os.path.join("upload/", filename))
 
