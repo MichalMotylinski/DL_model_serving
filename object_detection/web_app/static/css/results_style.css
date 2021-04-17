@@ -1,0 +1,151 @@
+/*
+Styling properties for results.html webpage.
+
+The order of elements is as they are displayed on the webpage from top to bottom and from left to right.
+The properties of each element are laid out such that theme properties are listed first followed by empty line and layout properties.
+Those two groups have separate alphabetical order of properties.
+*/
+
+/* Grid container for results content */
+#grid-container {
+    background-color: #DCDCDC;
+    color: white;
+
+    display: grid;
+    grid-gap: 10px;
+    grid-template-areas:
+    'table table download download'
+    'left left right right';
+    grid-template-columns: repeat(4, 1fr);
+    padding: 10px;
+}
+
+#grid-container > div {
+    padding: 0;
+    text-align: center;
+}
+
+#results-container{
+    background-color: #666;
+
+    grid-area: table;
+    justify-self: end;
+    position: relative;
+    width: 500px;
+}
+
+#results-container table {
+    grid-area: table;
+    width: 100%;
+}
+
+.header {
+    font-size: 18px;
+    font-weight: bold;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#results-table-scroll {
+    font-size: 16px;
+
+    height: 200px;
+    margin-top: 8px;
+    overflow: auto;
+}
+
+#download-container {
+    background-color: #666;
+
+    grid-area: download;
+    justify-self: start;
+    width: 500px;
+}
+
+#download-header {
+    font-size: 18px;
+    font-weight: bold;
+
+    margin-top: 15px;
+    position: relative;
+}
+
+#download-container table {
+    width: 100%;
+}
+
+#download-table-scroll {
+    font-size: 16px;
+
+    height: 150px;
+    margin-top:20px;
+    overflow: auto;
+}
+
+#download-table-scroll tr:hover {
+   background: #DC143C;
+}
+
+td a {
+    text-decoration: none;
+
+   display: block;
+}
+
+#btn1 {
+    bottom: 2%;
+    position: relative;
+}
+
+#download-button {
+    cursor: pointer;
+}
+
+#img1 {
+    grid-area: left;
+    justify-self: end;
+}
+#img2 {
+    grid-area: right;
+    justify-self: start;
+}
+
+.result-img {
+    cursor: pointer;
+    height: 500px;
+    width: 500px;
+}
+
+.result-img:hover {
+    opacity: 0.5;
+}
+
+#modal-image {
+    display: flex;
+    justify-content: center;
+}
+
+#close {
+    border: none;
+    background-color: inherit;
+    color: inherit;
+    cursor: pointer;
+    font-size: 24px;
+    text-decoration: none;
+    white-space: nowrap;
+
+    display: inline-block;
+    overflow: hidden;
+    padding: 8px 16px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    vertical-align: middle;
+}
+
+#close:hover {
+    background-color: #DC143C;
+    color: #fff;
+}

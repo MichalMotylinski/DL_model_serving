@@ -1,0 +1,49 @@
+/*
+Styling properties for index.html webpage.
+
+The order of elements is as they are displayed on the webpage from top to bottom and from left to right.
+The properties of each element are laid out such that theme properties are listed first followed by empty line and layout properties.
+Those two groups have separate alphabetical order of properties.
+*/
+
+/* Upload image container */
+#upload-container {
+    position: absolute;
+    top: 300px;
+    bottom: 0px;
+    left : 0%;
+    width: 100%;
+}
+
+#upload-header {
+    font-family: URW Chancery L, cursive;
+    font-size: 36px;
+
+    margin-top: -20px;
+    padding: 0px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+
+#row {
+    position: absolute;
+    text-align: center;
+    top: 80px;
+    width: 100%;
+}
+
+.input {
+    cursor:pointer;
+}
+
+#uploaded-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+#uploaded {
+    max-height: 600px;
+    max-width: 600px;
+}

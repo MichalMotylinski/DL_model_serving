@@ -1,0 +1,21 @@
+version: "3"
+services:
+    od_app:
+        image: od_app
+        ports:
+            - 5000:5000
+    tensorflow:
+        image: tensorflow/serving:2.2.2-gpu
+        deploy:
+            resources:
+                reservations:
+                    devices:
+                        - capabilities: [ gpu ]
+        ports:
+            - 8500:8500
+        environment:
+            MODEL_NAME: uk_birds
+        volumes:
+            - type: bind
+              source: ./saved_model
+              target: /models/uk_birds
