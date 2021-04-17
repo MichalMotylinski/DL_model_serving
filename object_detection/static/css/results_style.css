@@ -1,0 +1,132 @@
+#grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas:
+    'table table download download'
+    'left left right right';
+    grid-gap: 10px;
+    background-color: #DCDCDC;
+    color: white;
+    padding: 10px;
+}
+
+#grid-container > div {
+    text-align: center;
+    padding: 0;
+}
+
+#results-container{
+    position:relative;
+    width: 500px;
+    grid-area: table;
+    justify-self: end;
+    background-color: #666;
+}
+
+#results-container table {
+    width:100%;
+    grid-area: table;
+}
+
+.header {
+    font-weight: bold;
+    font-size: 18px;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+
+#results-table-scroll {
+    margin-top: 8px;
+    height:200px;
+    overflow:auto;
+    font-size: 16px;
+}
+
+tr:hover {
+   background: #DC143C;
+}
+
+td a {
+   display: block;
+}
+
+#download-container {
+    background-color: #666;
+    grid-area: download;
+    justify-self: start;
+    width: 500px;
+}
+
+#download-header {
+    position: relative;
+    font-size: 18px;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+#download-container table {
+    width:100%;
+}
+
+#download-table-scroll {
+    height: 150px;
+    overflow:auto;
+    margin-top:20px;
+    font-size: 16px;
+}
+
+#btn1 {
+    position: relative;
+    bottom: 2%;
+}
+
+#download-button {
+    cursor:pointer;
+}
+
+#img1 {
+    grid-area: left;
+    justify-self: end;
+}
+#img2 {
+    grid-area: right;
+    justify-self: start;
+}
+
+.result-img {
+    height: 500px;
+    width: 500px;
+    cursor:pointer;
+}
+
+.result-img:hover {
+    opacity: 0.5;
+}
+
+#modal-image {
+    display: flex;
+    justify-content: center;
+}
+
+#close {
+    font-size: 24px;
+    border:none;
+    display:inline-block;
+    padding:8px 16px;
+    vertical-align:middle;
+    overflow:hidden;
+    text-decoration:none;
+    color:inherit;
+    background-color: inherit;
+    text-align:center;
+    cursor:pointer;
+    white-space:nowrap;
+    position:absolute;
+    right:0;
+    top:0;
+}
+
+#close:hover {
+    color:#fff;
+    background-color:#DC143C
+}

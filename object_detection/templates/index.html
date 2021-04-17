@@ -2,19 +2,16 @@
 <html lang="en">
     <head>
         <title>Bird Detector</title>
-        <link rel="stylesheet" href="{{ stylesheet }}" type="text/css">
+        <link rel="stylesheet" href="{{ general_style }}" type="text/css">
+        <link rel="stylesheet" href="{{ page_style }}" type="text/css">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <script>
-            function error_check() {
-                var err = "{{ error }}";
-                if (err == "True") {
-                    alert("Only following extensions are allowed: jpg, jpeg, png");
-                }
-            }
+            // Get image upon file upload
             function init() {
                 var inputFile = document.getElementById('inputFile1');
                 inputFile.addEventListener('change', mostrarImagen, false);
             }
+            // Display chosen image on the webpage
             function mostrarImagen(event) {
                 var file = event.target.files[0];
                 var reader = new FileReader();
@@ -25,6 +22,32 @@
                 reader.readAsDataURL(file);
             }
             window.addEventListener('load', init, false);
+
+            // Validate if the chosen file has the correct extension
+            // Dynamically go through extensions list
+            function validate() {
+                var sub = document.getElementById('inputFile1').value;
+                var ext = {{ extensions|tojson }};
+                var contains = false;
+                var ext_string = "";
+
+                for (i = 0; i < ext.length; i++) {
+                    if (sub.includes(ext[i])) {
+                        contains = true;
+                    }
+                    if (i == 0) {
+                        ext_string += ext[i];
+                    } else {
+                        ext_string += ", " + ext[i];
+                    }
+                }
+                if (contains == true) {
+                    return true;
+                } else {
+                    alert("Only following extensions are allowed: " + ext_string);
+                    return false;
+                }
+            }
         </script>
     </head>
 
@@ -72,15 +95,16 @@
             </div>
         </div>
 
+        <!-- Upload container -->
         <div id="upload-container">
             <div id="upload-header">
                 <p>Upload Image</p>
             </div>
-            <form action="upload" method="post" enctype="multipart/form-data">
+            <form name="submitform" action="upload" method="post" onsubmit="return validate()" enctype="multipart/form-data">
                 <div id="row">
                     <div>
-                        <input type="file" name="file" id="inputFile1">
-                        <input type="submit" value="Upload">
+                        <input class="input" type="file" name="file" id="inputFile1">
+                        <input class="input" type="submit" value="Upload">
                     </div>
                     <div id="uploaded-container">
                         <img id="uploaded">
@@ -88,6 +112,5 @@
                 </div>
             </form>
         </div>
-
     </body>
 </html>
