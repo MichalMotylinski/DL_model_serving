@@ -44,9 +44,9 @@ body {
 }
 
 @keyframes color-change {
-  0% { color: #aaa; }
-  50% { color: #000; }
-  100% { color: #aaa; }
+    0% { color: #aaa; }
+    50% { color: #000; }
+    100% { color: #aaa; }
 }
 
 /* I set 3s color change time so it's not so distracting */
@@ -125,4 +125,25 @@ body {
 
 #dropdown:hover #dropdown-content {
     display: block;
+}
+
+/* Image container */
+#wall::after {
+    clear: both;
+    content: "";
+
+    box-sizing: border-box;
+    display: table;
+}
+
+.wallie {
+    box-sizing: border-box;
+    float: left;
+    width: 20%;
+
+}
+
+.wall-image {
+    height: 150px;
+    width: 100%;
 }

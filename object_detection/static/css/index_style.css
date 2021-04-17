@@ -6,26 +6,6 @@ The properties of each element are laid out such that theme properties are liste
 Those two groups have separate alphabetical order of properties.
 */
 
-/* Image container */
-#wall::after {
-  content: "";
-  clear: both;
-
-  display: table;
-  box-sizing: border-box;
-}
-
-.wallie {
-  float: left;
-  width: 20%;
-  box-sizing: border-box;
-}
-
-.wall-image {
-    height: 150px;
-    width: 100%;
-}
-
 /* Upload image container */
 #upload-container {
     position: absolute;
@@ -36,20 +16,21 @@ Those two groups have separate alphabetical order of properties.
 }
 
 #upload-header {
-    position: absolute;
-    text-align:center;
-    width:100%;
-    font-size: 36px;
     font-family: URW Chancery L, cursive;
-    padding: 0px;
+    font-size: 36px;
+
     margin-top: -20px;
+    padding: 0px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
 }
 
 #row {
     position: absolute;
+    text-align: center;
     top: 80px;
-    width:100%;
-    text-align:center;
+    width: 100%;
 }
 
 .input {

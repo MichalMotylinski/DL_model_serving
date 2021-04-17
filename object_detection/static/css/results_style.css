@@ -1,45 +1,58 @@
+/*
+Styling properties for results.html webpage.
+
+The order of elements is as they are displayed on the webpage from top to bottom and from left to right.
+The properties of each element are laid out such that theme properties are listed first followed by empty line and layout properties.
+Those two groups have separate alphabetical order of properties.
+*/
+
+/* Grid container for results content */
 #grid-container {
+    background-color: #DCDCDC;
+    color: white;
+
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
     grid-template-areas:
     'table table download download'
     'left left right right';
-    grid-gap: 10px;
-    background-color: #DCDCDC;
-    color: white;
+    grid-template-columns: repeat(4, 1fr);
     padding: 10px;
 }
 
 #grid-container > div {
-    text-align: center;
     padding: 0;
+    text-align: center;
 }
 
 #results-container{
-    position:relative;
-    width: 500px;
+    background-color: #666;
+
     grid-area: table;
     justify-self: end;
-    background-color: #666;
+    position: relative;
+    width: 500px;
 }
 
 #results-container table {
-    width:100%;
     grid-area: table;
+    width: 100%;
 }
 
 .header {
-    font-weight: bold;
     font-size: 18px;
-    overflow:hidden;
+    font-weight: bold;
+
+    overflow: hidden;
     text-overflow: ellipsis;
 }
 
 #results-table-scroll {
-    margin-top: 8px;
-    height:200px;
-    overflow:auto;
     font-size: 16px;
+
+    height: 200px;
+    margin-top: 8px;
+    overflow: auto;
 }
 
 tr:hover {
@@ -52,36 +65,39 @@ td a {
 
 #download-container {
     background-color: #666;
+
     grid-area: download;
     justify-self: start;
     width: 500px;
 }
 
 #download-header {
-    position: relative;
     font-size: 18px;
-    margin-top: 15px;
     font-weight: bold;
+
+    margin-top: 15px;
+    position: relative;
 }
 
 #download-container table {
-    width:100%;
+    width: 100%;
 }
 
 #download-table-scroll {
-    height: 150px;
-    overflow:auto;
-    margin-top:20px;
     font-size: 16px;
+
+    height: 150px;
+    margin-top:20px;
+    overflow: auto;
 }
 
 #btn1 {
-    position: relative;
     bottom: 2%;
+    position: relative;
 }
 
 #download-button {
-    cursor:pointer;
+    cursor: pointer;
 }
 
 #img1 {
@@ -94,9 +110,9 @@ td a {
 }
 
 .result-img {
+    cursor: pointer;
     height: 500px;
     width: 500px;
-    cursor:pointer;
 }
 
 .result-img:hover {
@@ -109,24 +125,25 @@ td a {
 }
 
 #close {
-    font-size: 24px;
-    border:none;
-    display:inline-block;
-    padding:8px 16px;
-    vertical-align:middle;
-    overflow:hidden;
-    text-decoration:none;
-    color:inherit;
+    border: none;
     background-color: inherit;
-    text-align:center;
-    cursor:pointer;
-    white-space:nowrap;
-    position:absolute;
-    right:0;
-    top:0;
+    color: inherit;
+    cursor: pointer;
+    font-size: 24px;
+    text-decoration: none;
+    white-space: nowrap;
+
+    display: inline-block;
+    overflow: hidden;
+    padding: 8px 16px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    vertical-align: middle;
 }
 
 #close:hover {
-    color:#fff;
-    background-color:#DC143C
+    background-color: #DC143C;
+    color: #fff;
 }

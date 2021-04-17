@@ -1,0 +1,15 @@
+/*
+Styling properties for about.html webpage.
+
+The order of elements is as they are displayed on the webpage from top to bottom and from left to right.
+The properties of each element are laid out such that theme properties are listed first followed by empty line and layout properties.
+Those two groups have separate alphabetical order of properties.
+*/
+
+/* About message */
+#about {
+    font-family: URW Chancery L, cursive;
+    font-size: 48px;
+
+    text-align: center;
+}

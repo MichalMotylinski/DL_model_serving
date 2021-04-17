@@ -205,10 +205,9 @@ def detect(frame, stub, model_name="od"):
     """
     Important note about the box drawing settings:
         - Drawing maximum of 100 boxes because it is unlikely that a single image will contain more objects.
-          Moreover this will reduce data being created.
-        - Skipping labels as they are often taking a lot of space on the image. 
-          The labels are being displayed in the table.
+          Moreover this will reduce amount of data being created.
     """
+
     new_img = viz_utils.visualize_boxes_and_labels_on_image_array(
         image_np,
         output_dict["detection_boxes"],
@@ -220,7 +219,7 @@ def detect(frame, stub, model_name="od"):
         line_thickness=4,
         min_score_thresh=threshold,
         agnostic_mode=False,
-        skip_labels=True)
+        skip_labels=False)
     return new_img, detections
 
 
@@ -241,12 +240,13 @@ def index():
     page_style = url_for("static", filename=os.path.join(app.config["CSS_FOLDER"], "index_style.css"))
     general_style = url_for("static", filename=os.path.join(app.config["CSS_FOLDER"], "site_style.css"))
     index_page = url_for("index")
+    about_page = url_for("about")
     logo = url_for("static", filename=os.path.join(app.config["SITE_IMAGES_FOLDER"], "bird_logo.jpg"))
     wall = []
     for i in range(0, 5):
         wall.append(url_for("static", filename=os.path.join(app.config["SITE_IMAGES_FOLDER"], f"wall{i}.jpg")))
     return render_template("index.html", general_style=general_style, page_style=page_style, index=index_page,
-                           extensions=list(app.config["ALLOWED_EXTENSIONS"]), logo=logo, wall=wall)
+                           extensions=list(app.config["ALLOWED_EXTENSIONS"]), logo=logo, wall=wall, about=about_page)
 
 
 @app.route("/upload", methods=["POST"])
@@ -277,7 +277,7 @@ def results(filename):
         render_template: render results.html template.
     """
     detected = filename.rsplit(".")[0] + "_detect." + filename.rsplit(".")[1]
-    rename_files(app.config["DETECTION_FOLDER"], filename)
+    rename_files(app.config["DETECTION_FOLDER"], detected)
 
     stub = get_stub()
 
@@ -308,6 +308,26 @@ def results(filename):
                            original=original_file, detected=detections_file, index=index_page,
                            logo=logo, result=detections, filename=filename,
                            d_path=detected_path, birds=birds)
+
+
+@app.route("/about")
+def about():
+    """
+    Set variables for the about page and render it.
+
+    Returns:
+        render_template: render about.html template.
+    """
+    # Set variables for webpage
+    about_style = url_for("static", filename=os.path.join(app.config["CSS_FOLDER"], "about_style.css"))
+    general_style = url_for("static", filename=os.path.join(app.config["CSS_FOLDER"], "site_style.css"))
+    index_page = url_for("index")
+    logo = url_for("static", filename=os.path.join(app.config["SITE_IMAGES_FOLDER"], "bird_logo.jpg"))
+    wall = []
+    for i in range(0, 5):
+        wall.append(url_for("static", filename=os.path.join(app.config["SITE_IMAGES_FOLDER"], f"wall{i}.jpg")))
+    return render_template("about.html", general_style=general_style, page_style=about_style, index=index_page,
+                           logo=logo, wall=wall)
 
 
 @app.after_request
